@@ -44,7 +44,7 @@ Tras evaluar criterios de seguridad, rendimiento a nivel criptográfico y contro
 
 ### 1. Fase de Registro (Creación de credenciales)
 1. El usuario solicita registrarse desde el Cliente.
-2. El Backend responde con un Desafío aleatorio.
+2. El Backend responde con un Desafío aleatorio.f
 3. La App Autenticadora pide la biometría del usuario.
 4. Tras el éxito biométrico, la App genera una **Llave Privada** (que se guarda en el chip del celular) y una **Llave Pública**.
 5. La App empaqueta la Llave Pública y la envía al Backend.
