@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ícono de lanzador foreground: candado de seguridad -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Cuerpo del candado -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,20 C44,20 36,28 36,38 L36,44 L30,44 C27.8,44 26,45.8 26,48 L26,76 C26,78.2 27.8,80 30,80 L78,80 C80.2,80 82,78.2 82,76 L82,48 C82,45.8 80.2,44 78,44 L72,44 L72,38 C72,28 64,20 54,20 Z M54,28 C59.5,28 64,32.5 64,38 L64,44 L44,44 L44,38 C44,32.5 48.5,28 54,28 Z M54,56 C57.3,56 60,58.7 60,62 C60,64.5 58.5,66.7 56,67.7 L56,72 L52,72 L52,67.7 C49.5,66.7 48,64.5 48,62 C48,58.7 50.7,56 54,56 Z" />
+</vector>

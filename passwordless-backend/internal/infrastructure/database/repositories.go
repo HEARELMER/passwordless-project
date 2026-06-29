@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"net"
+	"net/netip"
 	"time"
 
 	"github.com/google/uuid"
@@ -387,7 +387,9 @@ func scanUser(row pgx.Row) (*entities.User, error) {
 func scanCredential(row pgx.Row) (*entities.Credential, error) {
 	var cred entities.Credential
 	var signCount int64
-	var lastLoginIP net.IP
+	// pgx/v5 mapea el tipo INET de PostgreSQL a netip.Addr, NO a net.IP.
+	// Usar net.IP aquí causa un error de tipo en runtime al hacer Scan.
+	var lastLoginIP netip.Addr
 	var clientInfoRaw []byte
 	var rawRegistrationRaw []byte
 
@@ -411,7 +413,8 @@ func scanCredential(row pgx.Row) (*entities.Credential, error) {
 		return nil, errors.New("invalid sign_count")
 	}
 	cred.SignCount = uint32(signCount)
-	if lastLoginIP != nil {
+	// IsValid() es false cuando el campo NULL de la BD devuelve la zero-value de netip.Addr.
+	if lastLoginIP.IsValid() {
 		cred.LastLoginIP = lastLoginIP.String()
 	}
 
@@ -482,11 +485,18 @@ func decodeJSON(data []byte) (map[string]any, error) {
 	return value, nil
 }
 
-func nullIP(value string) net.IP {
+// nullIP convierte un string de IP a netip.Addr para insertar en una columna INET.
+// pgx/v5 acepta netip.Addr como tipo nativo para INET; devuelve zero-value si el
+// string está vacío, lo que pgx interpreta como NULL cuando el campo es nullable.
+func nullIP(value string) *netip.Addr {
 	if value == "" {
 		return nil
 	}
-	return net.ParseIP(value)
+	addr, err := netip.ParseAddr(value)
+	if err != nil {
+		return nil
+	}
+	return &addr
 }
 
 func buildSelectOptions(limit int, offset int, orderBy []shareddb.OrderBy) *shareddb.SelectOptions {

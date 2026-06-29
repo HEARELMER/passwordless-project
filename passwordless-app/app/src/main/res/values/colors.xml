@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paleta principal — morado/azul oscuro premium -->
+    <color name="color_primary">#6C63FF</color>
+    <color name="color_primary_variant">#4B44CC</color>
+    <color name="color_secondary">#03DAC6</color>
+    <color name="color_secondary_variant">#018786</color>
+
+    <!-- Fondos oscuros -->
+    <color name="color_background">#0D0E1A</color>
+    <color name="color_surface">#161728</color>
+    <color name="color_surface_variant">#1E2035</color>
+    <color name="color_card">#1A1B2E</color>
+
+    <!-- Texto -->
+    <color name="color_on_background">#EAEAF5</color>
+    <color name="color_on_surface">#BBBCDA</color>
+    <color name="color_on_primary">#FFFFFF</color>
+
+    <!-- Estado -->
+    <color name="color_success">#00E5A0</color>
+    <color name="color_error">#FF5370</color>
+    <color name="color_warning">#FFB74D</color>
+
+    <!-- Gradiente -->
+    <color name="gradient_start">#6C63FF</color>
+    <color name="gradient_end">#3B3F9E</color>
+
+    <!-- Transparencias -->
+    <color name="color_divider">#2A2B3D</color>
+    <color name="color_shimmer">#252638</color>
+</resources>

@@ -1,0 +1,44 @@
+# Android build artifacts
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/captures
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# App-specific build outputs
+app/build/
+app/release/
+
+# Keystore files (NUNCA subir al repositorio)
+*.jks
+*.keystore
+
+# Google Services (si aplica)
+google-services.json
+
+# Gradle wrapper binary (se descarga automáticamente)
+# gradle/wrapper/gradle-wrapper.jar  <- se sube para reproducibilidad
+
+# IntelliJ IDEA
+*.iml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+
+# Local configuration
+local.properties
+
+# OS files
+Thumbs.db

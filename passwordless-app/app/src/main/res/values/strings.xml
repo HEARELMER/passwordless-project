@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Passwordless Auth</string>
+    <string name="app_tagline">Tu huella es tu contraseña</string>
+
+    <!-- Welcome -->
+    <string name="welcome_title">Acceso sin contraseñas</string>
+    <string name="welcome_subtitle">Autenticación de siguiente generación con criptografía de hardware</string>
+    <string name="btn_register">Registrarse</string>
+    <string name="btn_login">Iniciar sesión</string>
+
+    <!-- Register -->
+    <string name="register_title">Crear cuenta</string>
+    <string name="register_subtitle">Tu dispositivo generará una llave de acceso única</string>
+    <string name="hint_user_id">Nombre de usuario o correo</string>
+    <string name="hint_display_name">Nombre para mostrar (opcional)</string>
+    <string name="btn_create_key">Crear llave de acceso</string>
+    <string name="register_bio_title">Registrar dispositivo</string>
+    <string name="register_bio_subtitle">Confirma tu identidad para crear tu llave criptográfica</string>
+
+    <!-- Login -->
+    <string name="login_title">Bienvenido de vuelta</string>
+    <string name="login_subtitle">Usa tu biometría para acceder de forma instantánea</string>
+    <string name="btn_authenticate">Autenticarme</string>
+
+    <!-- Home -->
+    <string name="home_title">Sesión activa</string>
+    <string name="session_info">Autenticado mediante criptografía asimétrica ECDSA P-256</string>
+    <string name="btn_logout">Cerrar sesión</string>
+    <string name="btn_revoke">Revocar credenciales de este dispositivo</string>
+
+    <!-- Security badges -->
+    <string name="badge_no_password">Sin contraseña</string>
+    <string name="badge_no_phishing">Anti-phishing</string>
+    <string name="badge_hardware">Hardware seguro</string>
+</resources>
