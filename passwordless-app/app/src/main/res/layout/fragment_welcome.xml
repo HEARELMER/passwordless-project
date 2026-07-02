@@ -1,103 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/vault_background"
-    android:padding="20dp"
-    tools:context=".ui.welcome.WelcomeFragment">
+    android:background="@color/color_background"
+    android:fillViewport="true">
 
-    <!-- Hex stream decorative top -->
-    <View
-        android:id="@+id/hexStreamBar"
-        android:layout_width="0dp"
-        android:layout_height="4dp"
-        android:background="@color/vault_surface_high"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Brand Header -->
-    <LinearLayout
-        android:id="@+id/brandHeader"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hexStreamBar">
+        android:padding="@dimen/spacing_xl">
 
-        <!-- Shield Icon -->
+        <!-- Hero icon -->
         <FrameLayout
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/bg_vault_input"
-            android:layout_marginBottom="16dp">
-            
+            android:id="@+id/icon_container"
+            android:layout_width="@dimen/icon_size_xl"
+            android:layout_height="@dimen/icon_size_xl"
+            android:background="@drawable/bg_icon_circle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/spacing_xxxl">
+
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_gravity="center"
-                android:src="@android:drawable/ic_secure"
-                app:tint="@color/vault_accent_dim" />
+                android:src="@android:drawable/ic_lock_idle_lock"
+                android:tint="@color/color_on_primary" />
         </FrameLayout>
 
+        <!-- Título -->
         <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_title"
+            android:textColor="@color/color_on_background"
+            android:textSize="@dimen/text_title"
+            android:fontFamily="sans-serif-medium"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="@dimen/spacing_xl"
+            app:layout_constraintTop_toBottomOf="@id/icon_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Subtítulo -->
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_subtitle"
+            android:textColor="@color/color_on_surface"
+            android:textSize="@dimen/text_subtitle"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="@dimen/spacing_md"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Badges de seguridad -->
+        <LinearLayout
+            android:id="@+id/badge_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VAULT LOGIC"
-            android:textColor="@color/vault_accent_dim"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.05"
-            android:layout_marginBottom="4dp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/spacing_xl"
+            app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/badge_no_password"
+                android:textSize="11sp"
+                android:textColor="@color/color_secondary"
+                android:background="@drawable/bg_card"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/badge_no_phishing"
+                android:textSize="11sp"
+                android:textColor="@color/color_secondary"
+                android:background="@drawable/bg_card"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/badge_hardware"
+                android:textSize="11sp"
+                android:textColor="@color/color_secondary"
+                android:background="@drawable/bg_card"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp" />
+        </LinearLayout>
+
+        <!-- Botón Registrarse -->
+        <Button
+            android:id="@+id/btn_register"
+            style="@style/Widget.App.Button.Primary"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Autenticación Segura"
-            android:textColor="@color/vault_on_surface"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-            
-        <TextView
-            android:layout_width="wrap_content"
+            android:text="@string/btn_register"
+            android:layout_marginTop="@dimen/spacing_xxxl"
+            app:layout_constraintTop_toBottomOf="@id/badge_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Botón Iniciar Sesión -->
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/Widget.App.Button.Secondary"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Sistema Passwordless ECDSA P-256"
-            android:textColor="@color/vault_on_surface_variant"
-            android:textSize="14sp"
-            android:layout_marginTop="8dp" />
-    </LinearLayout>
+            android:text="@string/btn_login"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:layout_marginBottom="@dimen/spacing_xl"
+            app:layout_constraintTop_toBottomOf="@id/btn_register"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/btn_vault_accent"
-        android:text="Iniciar Sesión (Llave Existente)"
-        android:textColor="@color/vault_on_accent"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/btnRegister"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/btn_vault_primary"
-        android:text="Crear Nueva Llave (Registro)"
-        android:textColor="@color/vault_on_primary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

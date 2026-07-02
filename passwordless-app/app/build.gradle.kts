@@ -15,12 +15,12 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // URL base del backend — cambiar en producción
-        buildConfigField("String", "BASE_URL", "\"https://passwordless-backend-8gd1.onrender.com/\"")
+        buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/\"")
     }
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://passwordless-backend-8gd1.onrender.com/\"")
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/\"")
         }
         release {
             isMinifyEnabled = true
@@ -28,7 +28,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"https://passwordless-backend-8gd1.onrender.com/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.tu-dominio.com/\"")
         }
     }
 
@@ -63,12 +63,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.livedata)
 
-    // Biometría (AndroidX) - Ya no se usa directamente, reemplazada por Passkeys
+    // Biometría (AndroidX)
     implementation(libs.androidx.biometric)
-
-    // Passkeys / Credential Manager
-    implementation("androidx.credentials:credentials:1.2.2")
-    implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
 
     // Red
     implementation(libs.retrofit)
