@@ -9,34 +9,25 @@
     tools:context=".ui.welcome.WelcomeFragment">
 
     <!-- Hex stream decorative top -->
-    <View
-        android:id="@+id/hexStreamBar"
-        android:layout_width="0dp"
-        android:layout_height="4dp"
-        android:background="@color/vault_surface_high"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Brand Header -->
     <LinearLayout
         android:id="@+id/brandHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hexStreamBar">
+        tools:layout_editor_absoluteY="88dp">
 
         <!-- Shield Icon -->
         <FrameLayout
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:background="@drawable/bg_vault_input"
-            android:layout_marginBottom="16dp">
-            
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_vault_input">
+
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -48,12 +39,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:letterSpacing="0.05"
             android:text="VAULT LOGIC"
             android:textColor="@color/vault_accent_dim"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.05"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,23 +53,16 @@
             android:textColor="@color/vault_on_surface"
             android:textSize="24sp"
             android:textStyle="bold" />
-            
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sistema Passwordless ECDSA P-256"
-            android:textColor="@color/vault_on_surface_variant"
-            android:textSize="14sp"
-            android:layout_marginTop="8dp" />
+
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/btn_vault_accent"
-        android:text="Iniciar Sesión (Llave Existente)"
+        android:text="Iniciar Sesión"
         android:textColor="@color/vault_on_accent"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -86,13 +70,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/btn_vault_primary"
-        android:text="Crear Nueva Llave (Registro)"
+        android:text="Registro"
         android:textColor="@color/vault_on_primary"
         android:textSize="16sp"
         android:textStyle="bold"

@@ -48,13 +48,13 @@ class LoginFragment : Fragment() {
                 is AuthResult.Success -> {
                     binding.progressBar.isVisible = false
                     binding.btnLogin.isEnabled = true
-                    Snackbar.make(binding.root, "✅ Bienvenido", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Bienvenido", Snackbar.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_login_to_home)
                 }
                 is AuthResult.Error -> {
                     binding.progressBar.isVisible = false
                     binding.btnLogin.isEnabled = true
-                    Snackbar.make(binding.root, "❌ ${result.message}", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "${result.message}", Snackbar.LENGTH_LONG).show()
                 }
             }
         }

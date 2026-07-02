@@ -13,14 +13,14 @@ class RegisterViewModel : ViewModel() {
     private val _registerState = MutableLiveData<AuthResult<String>>()
     val registerState: LiveData<AuthResult<String>> = _registerState
 
-    fun register(repository: AuthRepository, userId: String, displayName: String) {
-        if (userId.isBlank()) {
-            _registerState.value = AuthResult.Error("El identificador no puede estar vacío")
+    fun register(repository: AuthRepository, username: String, email: String) {
+        if (username.isBlank() || email.isBlank()) {
+            _registerState.value = AuthResult.Error("Todos los campos son obligatorios")
             return
         }
         _registerState.value = AuthResult.Loading
         viewModelScope.launch {
-            _registerState.postValue(repository.register(userId.trim(), displayName.trim().ifBlank { userId.trim() }))
+            _registerState.postValue(repository.register(username.trim(), email.trim()))
         }
     }
 

@@ -35,9 +35,9 @@ class RegisterFragment : Fragment() {
         repository = AuthRepository(sessionManager, requireActivity())
 
         binding.btnRegister.setOnClickListener {
-            val userId = binding.etUsername.text.toString()
-            val displayName = userId // Usamos el username como display name en este diseño minimalista
-            viewModel.register(repository, userId, displayName)
+            val username = binding.etUsername.text.toString()
+            val email = binding.etEmail.text.toString()
+            viewModel.register(repository, username, email)
         }
 
         viewModel.registerState.observe(viewLifecycleOwner) { result ->

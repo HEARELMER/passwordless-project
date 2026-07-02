@@ -42,11 +42,11 @@ class AuthRepository(
 
     // ─── REGISTRO ──────────────────────────────────────────────────────────
 
-    suspend fun register(userId: String, displayName: String): AuthResult<String> =
+    suspend fun register(username: String, email: String): AuthResult<String> =
         withContext(Dispatchers.IO) {
             try {
                 // 1. Solicitar opciones de registro al servidor
-                val beginResp = api.registerBegin(RegisterBeginRequest(userId, displayName))
+                val beginResp = api.registerBegin(RegisterBeginRequest(username, email))
                 if (!beginResp.isSuccessful) {
                     return@withContext AuthResult.Error("Error al iniciar registro: ${beginResp.code()}")
                 }
@@ -73,13 +73,14 @@ class AuthRepository(
                 
                 val finishResp = api.registerFinish(beginData.sessionId, requestBody)
 
-                if (finishResp.isSuccessful && finishResp.body()?.success == true) {
-                    sessionManager.userId = userId
-                    sessionManager.displayName = displayName
+                if (finishResp.isSuccessful && finishResp.body()?.status == "ok") {
+                    sessionManager.userId = username
+                    sessionManager.displayName = email
                     sessionManager.isRegistered = true
                     AuthResult.Success("Registro exitoso")
                 } else {
-                    AuthResult.Error("El servidor rechazó el registro: ${finishResp.body()?.message ?: finishResp.code()}")
+                    val errBody = finishResp.errorBody()?.string()
+                    AuthResult.Error("El servidor rechazó el registro: ${errBody ?: finishResp.code()}")
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error en registro", e)
@@ -100,7 +101,11 @@ class AuthRepository(
                 val beginData = beginResp.body()!!
                 
                 // 2. Ejecutar CredentialManager (Passkeys UI Nativa)
-                val requestJson = beginData.publicKey.toString()
+                val publicKeyObj = beginData.publicKey.asJsonObject
+                // HACK Samsung Pass: Remover allowCredentials para forzar Discoverable Credentials
+                publicKeyObj.remove("allowCredentials")
+                
+                val requestJson = publicKeyObj.toString()
                 val getOption = GetPublicKeyCredentialOption(requestJson)
                 val getRequest = GetCredentialRequest(listOf(getOption))
                 
@@ -122,12 +127,13 @@ class AuthRepository(
                 val finishResp = api.loginFinish(beginData.sessionId, requestBody)
 
                 val body = finishResp.body()
-                if (finishResp.isSuccessful && body?.success == true) {
+                if (finishResp.isSuccessful && body != null && body.token.isNotEmpty()) {
                     sessionManager.sessionToken = body.token
                     sessionManager.userId = userId
-                    AuthResult.Success(body.token ?: "Sesión iniciada")
+                    AuthResult.Success(body.token)
                 } else {
-                    AuthResult.Error("Verificación fallida: ${body?.message ?: finishResp.code()}")
+                    val errBody = finishResp.errorBody()?.string()
+                    AuthResult.Error("Verificación fallida: ${errBody ?: finishResp.code()}")
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error en login", e)

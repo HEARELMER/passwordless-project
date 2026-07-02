@@ -6,10 +6,8 @@ import com.google.gson.JsonObject
 // ─── REGISTRO ──────────────────────────────────────────────────────────────
 
 data class RegisterBeginRequest(
-    @SerializedName("username")
-    val userId: String,
-    @SerializedName("email")
-    val displayName: String
+    val username: String,
+    val email: String
 )
 
 data class RegisterBeginResponse(
@@ -18,9 +16,7 @@ data class RegisterBeginResponse(
 )
 
 data class RegisterFinishResponse(
-    val success: Boolean,
-    val message: String,
-    val credentialId: String?
+    val status: String
 )
 
 // ─── LOGIN ─────────────────────────────────────────────────────────────────
@@ -36,9 +32,9 @@ data class LoginBeginResponse(
 )
 
 data class LoginFinishResponse(
-    val success: Boolean,
-    val token: String?,         // JWT de sesión (si autenticación exitosa)
-    val message: String
+    val token: String,
+    @SerializedName("user_id") val userId: String,
+    @SerializedName("expires_in") val expiresIn: Int
 )
 
 // ─── ERROR GENÉRICO ────────────────────────────────────────────────────────

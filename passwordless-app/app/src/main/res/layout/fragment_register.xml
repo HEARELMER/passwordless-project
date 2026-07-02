@@ -67,32 +67,54 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IDENTIFICADOR ÚNICO"
+            android:layout_marginBottom="8dp"
+            android:text="NOMBRE DE USUARIO"
+            android:textColor="@color/vault_on_surface_variant"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_vault_input"
+            android:hint="user123"
+            android:inputType="textNoSuggestions"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@color/vault_on_surface"
+            android:textColorHint="@color/vault_outline" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CORREO ELECTRÓNICO"
             android:textColor="@color/vault_on_surface_variant"
             android:textSize="12sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
         <EditText
-            android:id="@+id/etUsername"
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/bg_vault_input"
-            android:hint="Email o nombre de usuario"
-            android:textColorHint="@color/vault_outline"
-            android:textColor="@color/vault_on_surface"
+            android:hint="correo@email.com"
+            android:inputType="textEmailAddress"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="24dp" />
+            android:textColor="@color/vault_on_surface"
+            android:textColorHint="@color/vault_outline" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/btn_vault_primary"
+            android:background="@drawable/btn_vault_accent"
             android:text="Autorizar Creación"
-            android:textColor="@color/vault_on_primary"
+            android:textColor="@color/vault_on_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
