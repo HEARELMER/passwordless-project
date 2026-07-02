@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.passwordless.authenticator.R
-import com.passwordless.authenticator.biometric.BiometricHelper
 import com.passwordless.authenticator.databinding.FragmentLoginBinding
 import com.passwordless.authenticator.repository.AuthRepository
 import com.passwordless.authenticator.utils.AuthResult
@@ -32,12 +31,11 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val biometricHelper = BiometricHelper(this)
         val sessionManager = SessionManager(requireContext())
-        repository = AuthRepository(sessionManager, biometricHelper)
+        repository = AuthRepository(sessionManager, requireActivity())
 
         binding.btnLogin.setOnClickListener {
-            val userId = binding.etUserId.text.toString()
+            val userId = binding.etUsername.text.toString()
             viewModel.login(repository, userId)
         }
 

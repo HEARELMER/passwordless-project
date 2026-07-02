@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/vault_surface_low" />
+    <stroke android:width="1dp" android:color="@color/vault_outline_variant" />
+    <corners android:radius="12dp" /> <!-- 12dp from 'rounded-xl' in html -->
+</shape>
