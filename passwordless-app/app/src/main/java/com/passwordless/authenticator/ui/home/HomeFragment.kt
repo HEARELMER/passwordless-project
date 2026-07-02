@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.passwordless.authenticator.R
-import com.passwordless.authenticator.crypto.KeyManager
 import com.passwordless.authenticator.databinding.FragmentHomeBinding
 import com.passwordless.authenticator.utils.SessionManager
 
@@ -31,11 +30,11 @@ class HomeFragment : Fragment() {
         viewModel.loadSession(session.sessionToken, session.userId)
 
         viewModel.userId.observe(viewLifecycleOwner) { uid ->
-            binding.tvWelcome.text = "Hola, ${uid ?: "Usuario"}"
+            binding.tvUserEmail.text = "Hola, ${uid ?: "Usuario"}"
         }
 
         viewModel.sessionToken.observe(viewLifecycleOwner) { token ->
-            binding.tvToken.text = if (token != null) {
+            binding.tvJwtToken.text = if (token != null) {
                 "Token JWT:\n${token.take(60)}…"
             } else {
                 "Sesión activa (sin token)"
@@ -53,7 +52,6 @@ class HomeFragment : Fragment() {
                 .setMessage("Esto eliminará tu llave de acceso de este dispositivo. Tendrás que registrarte nuevamente.")
                 .setPositiveButton("Revocar") { _, _ ->
                     val userId = session.userId
-                    if (userId != null) KeyManager.deleteKey(userId)
                     session.clearAll()
                     findNavController().navigate(R.id.action_home_to_welcome)
                 }

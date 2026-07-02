@@ -1,32 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta principal — morado/azul oscuro premium -->
-    <color name="color_primary">#6C63FF</color>
-    <color name="color_primary_variant">#4B44CC</color>
-    <color name="color_secondary">#03DAC6</color>
-    <color name="color_secondary_variant">#018786</color>
+    <!-- Brand Core -->
+    <color name="vault_primary">#1a237e</color>
+    <color name="vault_on_primary">#bdc2ff</color>
+    
+    <!-- Cyber Lime Accent (Success/Active) -->
+    <color name="vault_accent">#bef500</color>
+    <color name="vault_on_accent">#273500</color>
+    <color name="vault_accent_dim">#a6d700</color>
 
-    <!-- Fondos oscuros -->
-    <color name="color_background">#0D0E1A</color>
-    <color name="color_surface">#161728</color>
-    <color name="color_surface_variant">#1E2035</color>
-    <color name="color_card">#1A1B2E</color>
+    <!-- Backgrounds & Surfaces -->
+    <color name="vault_background">#131313</color>
+    <color name="vault_surface_lowest">#0e0e0e</color>
+    <color name="vault_surface_low">#1c1b1b</color>
+    <color name="vault_surface">#131313</color>
+    <color name="vault_surface_high">#2a2a2a</color>
+    
+    <!-- Text -->
+    <color name="vault_on_surface">#e5e2e1</color>
+    <color name="vault_on_surface_variant">#c6c5d4</color>
+    
+    <!-- Outline & Borders -->
+    <color name="vault_outline">#908f9d</color>
+    <color name="vault_outline_variant">#454652</color>
 
-    <!-- Texto -->
-    <color name="color_on_background">#EAEAF5</color>
-    <color name="color_on_surface">#BBBCDA</color>
-    <color name="color_on_primary">#FFFFFF</color>
+    <!-- Error states -->
+    <color name="vault_error">#ffb4ab</color>
+    <color name="vault_on_error">#690005</color>
+    <color name="vault_error_container">#93000a</color>
 
-    <!-- Estado -->
-    <color name="color_success">#00E5A0</color>
-    <color name="color_error">#FF5370</color>
-    <color name="color_warning">#FFB74D</color>
-
-    <!-- Gradiente -->
-    <color name="gradient_start">#6C63FF</color>
-    <color name="gradient_end">#3B3F9E</color>
-
-    <!-- Transparencias -->
-    <color name="color_divider">#2A2B3D</color>
-    <color name="color_shimmer">#252638</color>
+    <!-- Fallback / Old colors mapped to new -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_primary">@color/vault_primary</color>
+    <color name="color_secondary">@color/vault_accent</color>
+    <color name="color_background">@color/vault_background</color>
+    <color name="color_surface">@color/vault_surface_low</color>
+    <color name="color_error">@color/vault_error</color>
+    <color name="color_on_primary">@color/vault_on_primary</color>
+    <color name="color_on_secondary">@color/vault_on_accent</color>
+    <color name="color_on_background">@color/vault_on_surface</color>
+    <color name="color_on_surface">@color/vault_on_surface</color>
 </resources>

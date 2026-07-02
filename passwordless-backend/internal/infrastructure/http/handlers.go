@@ -33,6 +33,24 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) {
 	mux.Handle("/api/credentials/", SecurityHeadersMiddleware(CORSMiddleware(auth(http.HandlerFunc(h.handleRevokeCredential)))))
 
 	mux.Handle("/health", http.HandlerFunc(h.handleHealth))
+	
+	// Digital Asset Links para Android Passkeys
+	mux.Handle("/.well-known/assetlinks.json", http.HandlerFunc(h.handleAssetLinks))
+}
+
+func (h *Handler) handleAssetLinks(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(`[{
+  "relation": ["delegate_permission/common.handle_all_urls", "delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.passwordless.authenticator",
+    "sha256_cert_fingerprints": [
+      "5B:50:D4:9F:C6:C6:04:2E:AF:A1:7C:0D:98:1D:05:E7:E9:45:E4:50:BC:57:2D:AF:CF:DD:0C:C0:2C:4C:27:EE"
+    ]
+  }
+}]`))
 }
 
 func (h *Handler) handleHealth(w http.ResponseWriter, r *http.Request) {

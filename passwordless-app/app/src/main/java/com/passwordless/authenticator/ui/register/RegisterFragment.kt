@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.passwordless.authenticator.R
-import com.passwordless.authenticator.biometric.BiometricHelper
 import com.passwordless.authenticator.databinding.FragmentRegisterBinding
 import com.passwordless.authenticator.repository.AuthRepository
 import com.passwordless.authenticator.utils.AuthResult
@@ -32,17 +31,12 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val biometricHelper = BiometricHelper(this)
         val sessionManager = SessionManager(requireContext())
-        repository = AuthRepository(sessionManager, biometricHelper)
-
-        if (!biometricHelper.isAvailable()) {
-            Snackbar.make(binding.root, "Este dispositivo no tiene biometría configurada", Snackbar.LENGTH_LONG).show()
-        }
+        repository = AuthRepository(sessionManager, requireActivity())
 
         binding.btnRegister.setOnClickListener {
-            val userId = binding.etUserId.text.toString()
-            val displayName = binding.etDisplayName.text.toString()
+            val userId = binding.etUsername.text.toString()
+            val displayName = userId // Usamos el username como display name en este diseño minimalista
             viewModel.register(repository, userId, displayName)
         }
 

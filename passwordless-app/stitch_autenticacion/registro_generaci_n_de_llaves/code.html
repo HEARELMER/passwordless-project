@@ -1,0 +1,312 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Vault Logic - Secure Key Generation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#8290f4",
+                    "background": "#131313",
+                    "outline-variant": "#454652",
+                    "surface-container-low": "#1c1b1b",
+                    "tertiary-container": "#102285",
+                    "on-tertiary-fixed-variant": "#2d3c9c",
+                    "on-primary-fixed": "#000767",
+                    "tertiary": "#bbc3ff",
+                    "on-tertiary": "#112286",
+                    "surface-variant": "#353534",
+                    "on-background": "#e5e2e1",
+                    "on-secondary-fixed-variant": "#3a4d00",
+                    "surface": "#131313",
+                    "surface-dim": "#131313",
+                    "secondary-container": "#bef500",
+                    "inverse-primary": "#4c56af",
+                    "surface-tint": "#bdc2ff",
+                    "error-container": "#93000a",
+                    "on-error": "#690005",
+                    "on-secondary": "#273500",
+                    "tertiary-fixed-dim": "#bbc3ff",
+                    "secondary-fixed": "#bef500",
+                    "secondary": "#ffffff",
+                    "primary-container": "#1a237e",
+                    "primary-fixed": "#e0e0ff",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-highest": "#353534",
+                    "primary-fixed-dim": "#bdc2ff",
+                    "surface-container": "#201f1f",
+                    "surface-bright": "#393939",
+                    "on-primary": "#1b247f",
+                    "surface-container-lowest": "#0e0e0e",
+                    "surface-container-high": "#2a2a2a",
+                    "tertiary-fixed": "#dfe0ff",
+                    "on-tertiary-fixed": "#000d5f",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#a6d700",
+                    "inverse-on-surface": "#313030",
+                    "on-primary-container": "#8690ee",
+                    "on-secondary-fixed": "#151f00",
+                    "on-surface": "#e5e2e1",
+                    "outline": "#908f9d",
+                    "on-surface-variant": "#c6c5d4",
+                    "primary": "#bdc2ff",
+                    "on-secondary-container": "#536d00",
+                    "inverse-surface": "#e5e2e1",
+                    "on-primary-fixed-variant": "#343d96"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "base": "4px",
+                    "container-padding": "20px",
+                    "xl": "32px",
+                    "gutter": "16px",
+                    "xs": "8px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "mono-code": ["Geist"],
+                    "display-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Geist"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "mono-code": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "display-sm": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #121212;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .hex-stream {
+            display: inline-block;
+            font-family: 'Geist', monospace;
+            letter-spacing: 0.1em;
+            color: #bdc2ff;
+        }
+
+        @keyframes scan-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .scanning-ring {
+            animation: scan-rotate 4s linear infinite;
+            border: 2px dashed #bef500;
+        }
+
+        .flicker-text {
+            animation: text-flicker 0.1s infinite alternate;
+        }
+
+        @keyframes text-flicker {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .sine-wave-container {
+            height: 40px;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism utility */
+        .glass-card {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen bg-background">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center h-16 px-container-padding w-full bg-background dark:bg-background border-b border-outline-variant dark:border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="shield_lock">shield_lock</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary dark:text-primary">Vault Logic</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors duration-200 cursor-pointer" data-icon="security">security</span>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow pt-24 pb-32 px-container-padding max-w-md mx-auto w-full flex flex-col items-center">
+<!-- Header Section -->
+<div class="w-full mb-xl text-center">
+<span class="font-label-md text-label-md text-primary tracking-widest block mb-xs uppercase">Onboarding Phase</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-sm">Registration - Step 2</h2>
+
+</div>
+<!-- Central Visualization Area -->
+<div class="relative w-full aspect-square flex items-center justify-center mb-xl">
+<!-- Animated Background Gradient Mesh (Represented via CSS Layering) -->
+<div class="absolute inset-0 opacity-20 pointer-events-none overflow-hidden rounded-full">
+<div class="absolute inset-0 bg-gradient-to-br from-primary via-transparent to-secondary-container blur-3xl scale-150"></div>
+</div>
+<!-- Key Generation Progress Circle -->
+<div class="relative w-64 h-64 flex items-center justify-center">
+<!-- Outer Scanning Ring -->
+<div class="absolute inset-0 rounded-full scanning-ring opacity-40"></div>
+<div class="absolute inset-2 rounded-full border border-outline-variant opacity-20"></div>
+<!-- Hex Stream Data Display -->
+<div class="text-center z-10">
+<div class="hex-stream font-mono-code text-primary text-headline-lg-mobile flicker-text" id="hexDisplay">0x51A47C...19</div>
+<div class="font-label-md text-label-md text-on-surface-variant mt-2 uppercase tracking-tighter" id="algoStatus">Ready for Authorization</div>
+</div>
+</div>
+</div>
+<!-- Information Bento Grid -->
+<div class="grid grid-cols-1 gap-md w-full">
+<!-- Status Card -->
+<div class="glass-card p-md rounded-xl relative overflow-hidden">
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">IDENTITY MODULE</span>
+<span class="font-mono-code text-label-md text-primary bg-primary/10 px-2 py-0.5 rounded" id="statusBadge">KEY READY</span>
+</div>
+<div class="flex items-end justify-between">
+<div>
+<div class="font-body-md text-body-md text-on-surface mb-1">Secure Enclave Binding</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Hardware-level key isolation.</div>
+</div>
+<div class="sine-wave-container w-24">
+<svg class="w-full h-full stroke-primary fill-none stroke-2" id="signatureWave" viewBox="0 0 100 40">
+<path d="M0 20 L 0 10.018561678938658 L 5 11.532437105647015 L 10 15.119467245473038 L 15 19.901422018137687 L 20 24.707512118789538 L 25 28.361039072536915 L 30 29.967492059895363 L 35 29.133555362552926 L 40 26.063405768578136 L 45 21.508722973786405 L 50 16.584652176458533 L 55 12.496777640753136 L 60 10.245953622619488 L 65 10.383260341928667 L 70 12.875080325054537 L 75 17.11132913486781 L 80 22.05482531838389 L 85 26.49522859942126 L 90 29.345373390303564 L 95 29.90744484394818 L 100 28.043828265575648"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Biometric Trigger Button -->
+<button class="w-full h-auto py-lg flex flex-col items-center justify-center gap-md bg-primary-container text-on-primary-container rounded-xl border border-primary/20 hover:bg-primary-container/80 transition-all duration-300 group active:scale-95" id="biometricBtn">
+<div class="w-16 h-16 rounded-full flex items-center justify-center bg-background/50 border border-primary/30 group-hover:border-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-4xl text-primary group-hover:text-secondary-fixed" data-icon="fingerprint" data-weight="fill" style="font-size: 40px;">fingerprint</span>
+</div>
+<div class="text-center">
+<span class="font-headline-lg-mobile text-headline-lg-mobile block">Link Biometrics</span>
+
+</div>
+</button>
+</div>
+</main>
+<!-- Success Message Overlay (Hidden by default) -->
+<div class="fixed inset-0 z-[60] bg-background/90 backdrop-blur-md flex flex-col items-center justify-center px-container-padding opacity-0 pointer-events-none transition-opacity duration-500" id="successOverlay">
+<div class="w-24 h-24 rounded-full bg-secondary-fixed flex items-center justify-center mb-xl shadow-[0_0_40px_rgba(190,245,0,0.4)]">
+<span class="material-symbols-outlined text-background text-5xl font-bold" data-icon="check">check</span>
+</div>
+<h2 class="font-display-sm text-display-sm text-on-surface text-center mb-md">Key Verified</h2>
+<p class="font-body-md text-body-md text-on-surface-variant text-center max-w-xs mb-xl">
+            Your cryptographic identity has been signed and transmitted to the secure node.
+        </p>
+<button class="px-xl py-md bg-secondary-fixed text-on-secondary-fixed font-bold rounded-full hover:brightness-110 transition-all">
+            Enter Dashboard
+        </button>
+</div>
+<!-- Script for interaction simulations -->
+<script>
+        // Hex Stream Animation
+        const hexDisplay = document.getElementById('hexDisplay');
+        const chars = '0123456789ABCDEF';
+        const algos = ['Generating RSA-2048', 'Generating ECDSA-P256', 'Signing Handshake', 'Finalizing Identity'];
+        const statusBadge = document.getElementById('statusBadge');
+        const algoStatus = document.getElementById('algoStatus');
+        let progress = 0;
+
+        function updateHex() {
+            let result = '0x';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            result += '...' + chars.charAt(Math.floor(Math.random() * chars.length)) + chars.charAt(Math.floor(Math.random() * chars.length));
+            hexDisplay.innerText = result;
+        }
+
+        const hexInterval = setInterval(updateHex, 100);
+
+        // Sine Wave Animation Logic
+        const path = document.querySelector('#signatureWave path');
+        let t = 0;
+        function animateWave() {
+            t += 0.1;
+            let d = "M0 20";
+            for (let x = 0; x <= 100; x += 5) {
+                let y = 20 + Math.sin(x * 0.1 + t) * 10;
+                d += ` L ${x} ${y}`;
+            }
+            path.setAttribute('d', d);
+            requestAnimationFrame(animateWave);
+        }
+        animateWave();
+
+        // Step through algorithms
+        let algoIndex = 0;
+        const algoInterval = setInterval(() => {
+            algoIndex++;
+            if (algoIndex < algos.length) {
+                algoStatus.innerText = algos[algoIndex];
+            } else {
+                clearInterval(algoInterval);
+                algoStatus.innerText = "Ready for Authorization";
+                statusBadge.innerText = "KEY READY";
+                statusBadge.className = "font-mono-code text-label-md text-primary bg-primary/10 px-2 py-0.5 rounded";
+            }
+        }, 2000);
+
+        // Biometric Button Action
+        const bioBtn = document.getElementById('biometricBtn');
+        const successOverlay = document.getElementById('successOverlay');
+
+        bioBtn.addEventListener('click', () => {
+            // Change UI to signing state
+            bioBtn.classList.add('opacity-50', 'pointer-events-none');
+            algoStatus.innerText = "Signing Public Key...";
+            path.classList.remove('stroke-primary');
+            path.classList.add('stroke-secondary-fixed');
+            
+            // Simulate processing
+            setTimeout(() => {
+                clearInterval(hexInterval);
+                hexDisplay.innerText = "0x" + Array.from({length:8}, () => chars.charAt(Math.floor(Math.random()*16))).join('');
+                hexDisplay.classList.remove('text-primary');
+                hexDisplay.classList.add('text-secondary-fixed');
+                
+                setTimeout(() => {
+                    successOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                    successOverlay.classList.add('opacity-100');
+                }, 800);
+            }, 1500);
+        });
+    </script>
+
+
+</body></html>

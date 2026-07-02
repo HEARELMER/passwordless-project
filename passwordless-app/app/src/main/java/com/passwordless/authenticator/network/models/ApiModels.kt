@@ -1,23 +1,20 @@
 package com.passwordless.authenticator.network.models
 
+import com.google.gson.annotations.SerializedName
+import com.google.gson.JsonObject
+
 // ─── REGISTRO ──────────────────────────────────────────────────────────────
 
 data class RegisterBeginRequest(
+    @SerializedName("username")
     val userId: String,
+    @SerializedName("email")
     val displayName: String
 )
 
 data class RegisterBeginResponse(
-    val challenge: String,      // Base64 URL-safe
-    val userId: String,
-    val rpId: String            // Relying Party ID (dominio del servidor)
-)
-
-data class RegisterFinishRequest(
-    val userId: String,
-    val publicKey: String,      // Llave pública X.509 en Base64 URL-safe
-    val signature: String,      // Firma DER del challenge en Base64 URL-safe
-    val clientDataHash: String  // SHA-256 del challenge en Base64 URL-safe
+    @SerializedName("session_id") val sessionId: String,
+    val publicKey: JsonObject
 )
 
 data class RegisterFinishResponse(
@@ -29,19 +26,13 @@ data class RegisterFinishResponse(
 // ─── LOGIN ─────────────────────────────────────────────────────────────────
 
 data class LoginBeginRequest(
+    @SerializedName("username")
     val userId: String
 )
 
 data class LoginBeginResponse(
-    val challenge: String,      // Base64 URL-safe
-    val userId: String,
-    val credentialId: String
-)
-
-data class LoginFinishRequest(
-    val userId: String,
-    val signature: String,      // Firma DER del challenge en Base64 URL-safe
-    val clientDataHash: String  // SHA-256 del challenge en Base64 URL-safe
+    @SerializedName("session_id") val sessionId: String,
+    val publicKey: JsonObject
 )
 
 data class LoginFinishResponse(
